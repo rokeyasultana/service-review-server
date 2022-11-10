@@ -20,7 +20,7 @@ async function run (){
   try{
 
     const serviceCollection = client.db('service-review').collection('services');
-
+    const reviewCollection = client.db('service-review').collection('reviews');
 //get service
 
     app.get('/services', async (req, res) => {
@@ -37,6 +37,14 @@ async function run (){
     const query = { _id: ObjectId(id) };
     const service = await serviceCollection.findOne(query);
     res.send(service);
+});
+
+
+//add review
+app.post('/reviews', async (req, res) => {
+  const reviews = req.body;
+  const result = await  reviewCollection.insertOne(reviews);
+  res.send(result);
 });
 
   }
