@@ -30,6 +30,13 @@ async function run (){
       res.send(services);
   });
 
+//get review
+app.get('/reviews',async(req,res)=>{
+  const query = {}
+  const cursor = reviewCollection.find(query);
+  const reviews = await cursor.toArray()
+  res.send(reviews);
+})
   //get service by id
 
   app.get('/services/:id', async (req, res) => {
@@ -40,15 +47,25 @@ async function run (){
 });
 
 
+//app.post
+
+app.post('/services',async(req,res)=>{
+  const NewServices = req.body;
+  const result = await serviceCollection.insertOne(NewServices);
+  res.send(result);
+})
+
+
 //add review
+
 app.post('/reviews', async (req, res) => {
   const reviews = req.body;
   const result = await  reviewCollection.insertOne(reviews);
   res.send(result);
 });
 
-  }
 
+  }
 
 
   finally{
